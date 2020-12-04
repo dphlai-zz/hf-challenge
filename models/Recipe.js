@@ -10,7 +10,7 @@ const recipeSchema = new mongoose.Schema({
   ingredients: [
     {
       name: String,
-      measurement: Number
+      measurement: String
     }
   ],
   nutritionalValue: [
