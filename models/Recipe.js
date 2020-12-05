@@ -11,13 +11,11 @@ const recipeSchema = new mongoose.Schema({
   ],
   preparationTime: Number,
   cookingDifficulty: String,
-  ingredients: [
-    {
+  ingredients: [{
       name: String,
       quantity: String,
       metric: String
-    }
-  ],
+  }],
   nutritionalValue: [
     energy: Number,
     fat: Number,
@@ -35,13 +33,11 @@ const recipeSchema = new mongoose.Schema({
   instructions: [
     step: String
   ],
-  ratings: [
-    {
+  ratings: [{
       ref: 'User',
       type: mongoose.Schema.Types.ObjectId,
       rating: Number
-    }
-  ]
+  }]
 }); // recipeSchema
 
 module.exports = mongoose.model('Recipe', recipeSchema);
