@@ -9,12 +9,13 @@ const recipeSchema = new mongoose.Schema({
   allergens: [
     name: String
   ],
-  preparationTime: String,
+  preparationTime: Number,
   cookingDifficulty: String,
   ingredients: [
     {
       name: String,
-      measurement: String
+      quantity: String,
+      metric: String
     }
   ],
   nutritionalValue: [
