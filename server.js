@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
 const express = require('express');
 const dotenv = require('dotenv').config();
 const app = express();
@@ -12,7 +13,7 @@ mongoose.connect(process.env.MONGO_URI, {
 const db = mongoose.connection;
 
 // check whether connection has succeeded or failed
-db.once('open',  () => console.log('Connected!', process.env.MONGO_URI)); // db.once()
+db.once('open',  () => console.log('Connected:', process.env.MONGO_URI)); // db.once()
 db.on('error', err => {
   conole.error('Connection error:', err)
 }); //db.on()
