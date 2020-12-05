@@ -34,6 +34,13 @@ const recipeSchema = new mongoose.Schema({
   ],
   instructions: [
     step: String
+  ],
+  ratings: [
+    {
+      ref: 'User',
+      type: mongoose.Schema.Types.ObjectId,
+      rating: Number
+    }
   ]
 }); // recipeSchema
 
