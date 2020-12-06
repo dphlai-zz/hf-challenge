@@ -80,6 +80,26 @@ app.get('/recipes/:id', async (req, res) => {
   }
 }) // GET /recipes/:id
 
+app.get('/menus', async (req, res) => {
+  try {
+    const weeklyMenus = await weeklyMenu.find({});
+    res.json(weeklyMenus);
+  } catch (error) {
+    console.log('Query error:', err);
+    res.sentStatus(500).json({error: err})
+  }
+}); // GET /menus
+
+app.get('/menus/:id', async (req, res) => {
+  try {
+    const menu = await weeklyMenu.findOne({_id: req.params.id})
+    res.json(menu);
+  } catch (err) {
+    console.log('Query error:', err);
+    res.sendStatus(500).json({error: err});
+  }
+}) // GET /menus/:id
+
 // UPDATE
 
 // DESTROY
