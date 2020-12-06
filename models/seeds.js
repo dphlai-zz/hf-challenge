@@ -18,18 +18,18 @@ db.on('error', err => {
 
 db.once('open', async () => {
   await Recipe.deleteMany({});
+  await weeklyMenu.deleteMany({});
   // await User.deleteMany({});
-  // await weeklyMenu.deleteMany({});
 
   const recipes = await seedRecipes();
-  // const weeklyMenus = await seedWeeklyMenus();
+  const weeklyMenus = await seedWeeklyMenus(recipes);
   // const users = await seedUsers();
 
   await printReport();
 
-  console.log(`Created ${recipes.length} recipes.`);
+  console.log(`Created ${recipes.length} recipe(s).`);
+  console.log(`Created ${weeklyMenus.length} menu(s).`);
   // console.log(`Created ${users.length} users.`);
-  // console.log(`Created ${weeklyMenus.length} menus.`);
   console.log(`Done.`);
   process.exit(0);
 
@@ -93,6 +93,39 @@ const seedRecipes = async () => {
           {step: 'Add the meatballs to the sauce and cover with a lid or foil. Reduce the heat to medium and simmer until the meatballs are cooked through, 6-7 minutes. Add the baby spinach leaves to the pan, increase the heat to high and cover with a lid or foil until just wilted, 1 minute. Season to taste. TIP: Add more reserved pasta water to your sauce if it is dry!'},
           {step: 'Divide the spaghetti, basil pesto meatballs and sauce between plates. Sprinkle with the grated Parmesan cheese to serve.'}
         ]
+      },
+      {
+        title: 'Butter Chicken with Basmati Rice',
+        description: 'Enjoy a favourite Indian diner classic in a zap without the fuss! This ready-to-heat butter chicken is deliciously mild and creamy served up on a bed of jasmine rice.',
+        tags: [
+          {name: 'meat'}
+        ],
+        allergens: [
+          {name: 'Milk'}
+        ],
+        preparationTime: 5,
+        cookingDifficulty: 'Easy',
+        ingredients: [
+          {name: 'Butter chicken with basmati rice', quantity: 1}
+        ],
+        nutritionalValue: [
+          {
+            energy: 1656,
+            fat: 25.6,
+            ofWhichSaturates: 12.6,
+            carbohydrates: 25.2,
+            ofWhichSugars: 4.9,
+            dietaryFibre: 0,
+            protein: 16.4,
+            cholestrol: 0,
+            sodium: 861
+          }
+        ],
+        utensils: [],
+        instructions: [
+          {step: 'Microwave (900W) - remove sleeve and pierce film in several places. Place container in microwave and heat until piping hot, 2-3 mins.'},
+          {step: 'Carefully remove from microwave and let stand for 1 min before peeling back the film. Enjoy! Note: Do not reheat or refrigerate once heated.'}
+        ]
       }
     ]); // Recipe.create
   } catch (err) {
@@ -101,12 +134,43 @@ const seedRecipes = async () => {
   }
 }; // seedRecipes()
 
+const seedWeeklyMenus = async (recipes) => {
+  try {
+    return await weeklyMenu.create([
+      {
+        week: 1,
+        description: '12 Dec - 18 Dec',
+        recipes: [
+          recipes[0],
+          recipes[1]
+        ]
+      },
+      {
+        week: 2,
+        description: '19 Dec - 25 Dec',
+        recipes: [
+          recipes[1]
+        ]
+      }
+    ]); // weeklyMenu.create()
+  } catch (err) {
+    console.warn('Error creating weekly menus:', err)
+    process.exit(1)
+  }
+}; // seedWeeklyMenus()
+
 const printReport = async () => {
 
   const recipeCheck = await Recipe.find();
 
   recipeCheck.forEach(recipe => {
     console.log(recipe);
-  });
+  }); // recipeCheck.forEach
+
+  const weeklyMenuCheck = await weeklyMenu.find();
+
+  weeklyMenuCheck.forEach(weeklyMenu => {
+    console.log(weeklyMenu);
+  }); // weeklyMenuCheck.forEach
 
 }; // printReport()
