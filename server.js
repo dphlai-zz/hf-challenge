@@ -23,6 +23,8 @@ db.on('error', err => {
   conole.error('Connection error:', err)
 }); //db.on()
 
+// checkAuth() would be passed into each CRUD route as a second parameter
+// e.g. app.get('/', checkAuth(), async (req, res) => {})
 const checkAuth = () => {
   return jwtAuthenticate({
     secret: SERVER_SECRET_KEY,
