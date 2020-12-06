@@ -19,17 +19,17 @@ db.on('error', err => {
 db.once('open', async () => {
   await Recipe.deleteMany({});
   await weeklyMenu.deleteMany({});
-  // await User.deleteMany({});
+  await User.deleteMany({});
 
   const recipes = await seedRecipes();
   const weeklyMenus = await seedWeeklyMenus(recipes);
-  // const users = await seedUsers();
+  const users = await seedUsers();
 
   await printReport();
 
   console.log(`Created ${recipes.length} recipe(s).`);
   console.log(`Created ${weeklyMenus.length} menu(s).`);
-  // console.log(`Created ${users.length} users.`);
+  console.log(`Created ${users.length} users.`);
   console.log(`Done.`);
   process.exit(0);
 
@@ -159,6 +159,31 @@ const seedWeeklyMenus = async (recipes) => {
   }
 }; // seedWeeklyMenus()
 
+const seedUsers = async () => {
+  try {
+    return await User.create([
+      {
+        firstName: 'Danny',
+        lastName: 'Lai',
+        email: 'danny@email.com',
+        passwordDigest: bcrypt.hashSync('chicken', 10),
+        ratings: []
+      },
+      {
+        firstName: 'Frank',
+        lastName: 'Lai',
+        email: 'frank@email.com',
+        passwordDigest: bcrypt.hashSync('chicken', 10),
+        ratings: []
+      },
+    ]); //
+  } catch (err) {
+    console.warn('Error creating weekly menus:', err)
+    process.exit(1)
+  }
+}; // seedUsers()
+
+// CLI debugging
 const printReport = async () => {
 
   const recipeCheck = await Recipe.find();
@@ -172,5 +197,11 @@ const printReport = async () => {
   weeklyMenuCheck.forEach(weeklyMenu => {
     console.log(weeklyMenu);
   }); // weeklyMenuCheck.forEach
+
+  const userCheck = await User.find();
+
+    userCheck.forEach(user => {
+      console.log(user);
+    }); // userCheck.forEach
 
 }; // printReport()
