@@ -23,13 +23,14 @@ db.on('error', err => {
   conole.error('Connection error:', err)
 }); //db.on()
 
-const SERVER_SECRET_KEY = process.env.SERVER_SECRET_KEY
 const checkAuth = () => {
   return jwtAuthenticate({
     secret: SERVER_SECRET_KEY,
     algorithms: ['HS256']
   });
 }; // checkAuth
+
+const SERVER_SECRET_KEY = process.env.SERVER_SECRET_KEY
 
 //  -------------------- EXPRESS SERVER INITIALISATION --------------------  //
 
@@ -81,6 +82,42 @@ app.post('/users', async (req, res) => {
     res.status(500).json({error: err});
   }
 })
+
+app.post('/login/users', async (req, res) => {
+  try {
+    const {email, password} = req.body;
+    const user = await User.findOne({email});
+
+    if (!user) {
+      return res.status(401).json({error: 'Login failed! Check authentication credentials.'});
+    } // if
+
+    if (user && bcrypt.compareSync(password, user.passwordDigest)) {
+      const token = await jwt.sign(
+        {
+          _id: user._id,
+          email: user.email,
+          name: user.firstName
+        },
+        SERVER_SECRET_KEY,
+        {expiresIn: '72h'}
+      ); // jwt.sign()
+
+      res.json({
+        user: {
+          name: user.firstName
+        },
+        token,
+        success: true
+      });
+    } else {
+      return res.json({error: 'Incorrect password.'});
+    } // if else
+  } catch (err) {
+    res.status(500).json({error:err});
+  }
+});
+// curl -XPOST -d '{"email":"danny@email.com", "password":"chicken"}' http://localhost:3000/login/users -H 'content-type: application/json'
 
 // READ
 app.get('/', async (req, res) => {
