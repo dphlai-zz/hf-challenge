@@ -1,1 +1,1 @@
-[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/4cf5cfdcfed11066eca4)
+Click here to access collection and run E2E tests: [![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/4cf5cfdcfed11066eca4)
