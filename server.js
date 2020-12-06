@@ -187,3 +187,32 @@ app.patch('/users/:id', async (req, res) => {
 }); // PATCH /users/:id
 
 // DESTROY
+app.delete('/recipes/:id', async (req, res) => {
+  try {
+    const recipe = await Recipe.findByIdAndDelete(req.params.id);
+    if(!recipe) res.status(404).json({notFound: true});
+    res.status(200).json({success: true});
+  } catch (err) {
+    res.status(500).json({error: err});
+  }
+}); // DELETE /recipes/:id
+
+app.delete('/menus/:id', async (req, res) => {
+  try {
+    const menu = await weeklyMenu.findByIdAndDelete(req.params.id);
+    if(!menu) res.status(404).json({notFound: true});
+    res.status(200).json({success: true});
+  } catch (err) {
+    res.status(500).json({error: err});
+  }
+}); // DELETE /menus/:id
+
+app.delete('/users/:id', async (req, res) => {
+  try {
+    const user = await User.findByIdAndDelete(req.params.id);
+    if(!user) res.status(404).json({notFound: true});
+    res.status(200).json({success: true});
+  } catch (err) {
+    res.status(500).json({error: err});
+  }
+}); // DELETE /users/:id
