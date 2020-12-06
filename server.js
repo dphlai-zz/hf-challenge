@@ -23,6 +23,14 @@ db.on('error', err => {
   conole.error('Connection error:', err)
 }); //db.on()
 
+const SERVER_SECRET_KEY = process.env.SERVER_SECRET_KEY
+const checkAuth = () => {
+  return jwtAuthenticate({
+    secret: SERVER_SECRET_KEY,
+    algorithms: ['HS256']
+  });
+}; // checkAuth
+
 //  -------------------- EXPRESS SERVER INITIALISATION --------------------  //
 
 const express = require('express');
@@ -40,6 +48,38 @@ app.listen(3000, () => console.log('Listening on 3000'));
 
 // -------------------------------- ROUTES --------------------------------  //
 
-app.get('/', (req, res) => {
-  res.send({'hello':'world'})
-})
+// CREATE
+
+// READ
+app.get('/', async (req, res) => {
+  try {
+    res.json({'hello(fresh)':'world'})
+  } catch (err) {
+    console.log('Query error:', err);
+    res.sendStatus(500).json({error: err});
+  }
+}); // GET /
+
+app.get('/recipes', async (req, res) => {
+  try {
+    const recipes = await Recipe.find({});
+    res.json(recipes);
+  } catch (err) {
+    console.log('Query error:', err);
+    res.sentStatus(500).json({error: err})
+  }
+}) // GET /recipes
+
+app.get('/recipes/:id', async (req, res) => {
+  try {
+    const recipe = await Recipe.findOne({_id: req.params.id})
+    res.json(recipe);
+  } catch (err) {
+    console.log('Query error:', err);
+    res.sendStatus(500).json({error: err});
+  }
+}) // GET /recipes/:id
+
+// UPDATE
+
+// DESTROY
