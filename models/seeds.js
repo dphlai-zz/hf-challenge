@@ -29,10 +29,9 @@ db.once('open', async () => {
 
   console.log(`Created ${recipes.length} recipe(s).`);
   console.log(`Created ${weeklyMenus.length} menu(s).`);
-  console.log(`Created ${users.length} users.`);
+  console.log(`Created ${users.length} user(s).`);
   console.log(`Done.`);
   process.exit(0);
-
 }); // db.once() initaliser
 
 const seedRecipes = async () => {
@@ -204,4 +203,4 @@ const printReport = async () => {
       console.log(user);
     }); // userCheck.forEach
 
-}; // printReport()
+}; // printReport(),
