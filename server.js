@@ -153,5 +153,37 @@ app.get('/menus/:id', async (req, res) => {
 }); // GET /menus/:id
 
 // UPDATE
+app.patch('/recipes/:id', async (req, res) => {
+  try {
+    const recipe = await Recipe.findByIdAndUpdate(req.params.id, req.body);
+    await recipe.save();
+    res.json(recipe);
+  } catch (err) {
+    console.log('Query error:', err);
+    res.status(500).json({error: err});
+  }
+}); // PATCH /recipes/:id
+
+app.patch('/menus/:id', async (req, res) => {
+  try {
+    const menu = await weeklyMenu.findByIdAndUpdate(req.params.id, req.body);
+    await menu.save();
+    res.json(menu);
+  } catch (err) {
+    console.log('Query error:', err);
+    res.status(500).json({error: err});
+  }
+}); // PATCH /menus/:id
+
+app.patch('/users/:id', async (req, res) => {
+  try {
+    const user = await User.findByIdAndUpdate(req.params.id, req.body);
+    await user.save();
+    res.json(user);
+  } catch (err) {
+    console.log('Query error:', err);
+    res.status(500).json({error: err});
+  }
+}); // PATCH /users/:id
 
 // DESTROY
