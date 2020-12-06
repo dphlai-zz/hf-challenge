@@ -71,6 +71,17 @@ app.post('/menus', async (req, res) => {
   }
 }); // POST /menus
 
+app.post('/users', async (req, res) => {
+  try {
+    const user = new User(req.body);
+    await user.save();
+    res.json(user);
+  } catch (err) {
+    console.log('Query error:', err);
+    res.status(500).json({error: err});
+  }
+})
+
 // READ
 app.get('/', async (req, res) => {
   try {
