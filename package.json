@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon server.js",
-    "seed": "node models/seeds"
+    "seed": "node models/seeds",
+    "seed-debug": "nodemon -x 'clear; node' models/seeds"
   },
   "author": "",
   "license": "ISC",
