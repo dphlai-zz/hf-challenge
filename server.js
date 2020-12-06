@@ -1,4 +1,4 @@
-//  -------------------- CONNECT TO MONGODB -------------------------------  //
+//  -------------------------- CONNECT TO MONGODB -------------------------- //
 
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
@@ -81,6 +81,26 @@ app.get('/', async (req, res) => {
   }
 }); // GET /
 
+app.get('/users', async (req, res) => {
+  try {
+    const users = await User.find({});
+    res.json(users);
+  } catch (err) {
+    console.log('Query error:', err);
+    res.sentStatus(500).json({error: err})
+  }
+});
+
+app.get('/users/:id', async (req, res) => {
+  try {
+    const user = await User.findOne({_id: req.params.id});
+    res.json(user);
+  } catch (err) {
+    console.log('Query error:', err);
+    res.sentStatus(500).json({error: err})
+  }
+});
+
 app.get('/recipes', async (req, res) => {
   try {
     const recipes = await Recipe.find({});
@@ -89,17 +109,17 @@ app.get('/recipes', async (req, res) => {
     console.log('Query error:', err);
     res.sentStatus(500).json({error: err})
   }
-}) // GET /recipes
+}); // GET /recipes
 
 app.get('/recipes/:id', async (req, res) => {
   try {
-    const recipe = await Recipe.findOne({_id: req.params.id})
+    const recipe = await Recipe.findOne({_id: req.params.id});
     res.json(recipe);
   } catch (err) {
     console.log('Query error:', err);
     res.sendStatus(500).json({error: err});
   }
-}) // GET /recipes/:id
+}); // GET /recipes/:id
 
 app.get('/menus', async (req, res) => {
   try {
@@ -113,13 +133,13 @@ app.get('/menus', async (req, res) => {
 
 app.get('/menus/:id', async (req, res) => {
   try {
-    const menu = await weeklyMenu.findOne({_id: req.params.id})
+    const menu = await weeklyMenu.findOne({_id: req.params.id});
     res.json(menu);
   } catch (err) {
     console.log('Query error:', err);
     res.sendStatus(500).json({error: err});
   }
-}) // GET /menus/:id
+}); // GET /menus/:id
 
 // UPDATE
 
