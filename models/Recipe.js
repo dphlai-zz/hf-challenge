@@ -3,20 +3,20 @@ const mongoose = require('mongoose');
 const recipeSchema = new mongoose.Schema({
   title: String,
   description: String,
-  tags: [
+  tags: [{
     name: String
-  ],
-  allergens: [
+  }],
+  allergens: [{
     name: String
-  ],
+  }],
   preparationTime: Number,
   cookingDifficulty: String,
   ingredients: [{
-      name: String,
-      quantity: String,
-      metric: String
+    name: String,
+    quantity: String,
+    metric: String
   }],
-  nutritionalValue: [
+  nutritionalValue: [{
     energy: Number,
     fat: Number,
     ofWhichSaturates: Number,
@@ -26,17 +26,17 @@ const recipeSchema = new mongoose.Schema({
     protein: Number,
     cholestrol: Number,
     sodium: Number
-  ],
-  utensils: [
+  }],
+  utensils: [{
     name: String
-  ],
-  instructions: [
+  }],
+  instructions: [{
     step: String
-  ],
+  }],
   ratings: [{
-      ref: 'User',
-      type: mongoose.Schema.Types.ObjectId,
-      rating: Number
+    ref: 'User',
+    type: mongoose.Schema.Types.ObjectId,
+    rating: Number
   }]
 }); // recipeSchema
 
