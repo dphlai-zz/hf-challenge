@@ -34,6 +34,7 @@ db.once('open', async () => {
   process.exit(0);
 }); // db.once() initaliser
 
+// run using npm run seed in CLI
 const seedRecipes = async () => {
   try {
     return await Recipe.create([
