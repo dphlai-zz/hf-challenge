@@ -49,6 +49,27 @@ app.listen(3000, () => console.log('Listening on 3000'));
 // -------------------------------- ROUTES --------------------------------  //
 
 // CREATE
+app.post('/recipes', async (req, res) => {
+  try {
+    const recipe = new Recipe(req.body);
+    await recipe.save();
+    res.json(recipe);
+  } catch (err) {
+    console.log('Query error:', err);
+    res.status(500).json({error: err});
+  }
+}); // POST /recipes
+
+app.post('/menus', async (req, res) => {
+  try {
+    const menu = new weeklyMenu(req.body);
+    await menu.save();
+    res.json(menu);
+  } catch (err) {
+    console.log('Query error:', err);
+    res.status(500).json({error: err});
+  }
+}); // POST /menus
 
 // READ
 app.get('/', async (req, res) => {
